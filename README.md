@@ -1,11 +1,4 @@
-
-
-Here's a comprehensive README.md for your InterviewAI project:
-
-```markdown:README.md
 # InterviewAI - AI-Powered Interview Preparation Platform
-
-![InterviewAI Logo](path/to/your/logo.png)
 
 ## Overview
 
