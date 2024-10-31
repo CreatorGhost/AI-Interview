@@ -1,5 +1,6 @@
 import React from 'react';
 import { Github, Twitter, Linkedin, Mail } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const navigation = {
   product: [
@@ -29,17 +30,64 @@ const navigation = {
 };
 
 export function Footer() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const scrollToSection = (sectionId: string) => {
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        element?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
+      const element = document.getElementById(sectionId);
+      element?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <footer className="bg-white border-t border-gray-100">
-      <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-          <div className="col-span-2 md:col-span-1">
-            <h3 className="text-lg font-semibold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 mb-4">
-              InterviewAI
-            </h3>
-            <p className="text-gray-500 text-sm">
-              Empowering job seekers with AI-powered interview preparation tools for career success.
-            </p>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid md:grid-cols-4 gap-8">
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Company</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link 
+                  to="/about" 
+                  className="text-gray-600 hover:text-indigo-600 transition-colors"
+                >
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <button
+                  onClick={() => scrollToSection('features')}
+                  className="text-gray-600 hover:text-indigo-600 transition-colors"
+                >
+                  Features
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => scrollToSection('pricing')}
+                  className="text-gray-600 hover:text-indigo-600 transition-colors"
+                >
+                  Pricing
+                </button>
+              </li>
+              {navigation.company.map((item) => (
+                <li key={item.name}>
+                  <a
+                    href={item.href}
+                    className="text-gray-500 hover:text-gray-900 transition-colors text-sm"
+                  >
+                    {item.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
           
           <div>

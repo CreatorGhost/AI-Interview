@@ -120,7 +120,7 @@ export function FeaturesSection() {
   const [selectedFeature, setSelectedFeature] = useState<typeof features[0] | null>(null);
 
   return (
-    <section className="relative py-32 bg-gradient-to-b from-gray-50 to-white overflow-hidden">
+    <section id="features" className="py-24 bg-white">
       {/* Background Decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-1/2 -right-1/4 w-[800px] h-[800px] bg-gradient-to-b from-indigo-50/40 to-purple-50/40 rounded-full blur-3xl"></div>

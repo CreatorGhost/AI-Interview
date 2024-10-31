@@ -1,58 +1,18 @@
 import React from 'react';
+import { Routes, Route, Link, useNavigate, useLocation } from 'react-router-dom';
 import { Play, ArrowRight, Target, Zap, Users } from 'lucide-react';
 import { FeaturesSection } from './components/FeaturesSection';
 import { FAQSection } from './components/FAQSection';
 import { PricingSection } from './components/PricingSection';
 import { Footer } from './components/Footer';
 import { AuthSection } from './components/AuthSection';
+import { AboutUs } from './pages/AboutUs';
 import { InteractiveTourSection } from './components/InteractiveTourSection';
 
-function App() {
-  const [showAuth, setShowAuth] = React.useState(false);
-
+function HomePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">
-              InterviewAI
-            </div>
-            <div className="flex gap-4">
-              <button
-                onClick={() => setShowAuth(true)}
-                className="px-4 py-2 text-indigo-600 hover:bg-indigo-50 rounded-lg transition"
-              >
-                Sign In
-              </button>
-              <button
-                onClick={() => setShowAuth(true)}
-                className="px-4 py-2 text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg transition"
-              >
-                Sign Up
-              </button>
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      {/* Auth Modal */}
-      {showAuth && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="relative w-full max-w-md">
-            <button
-              onClick={() => setShowAuth(false)}
-              className="absolute -top-12 right-0 text-white hover:text-gray-200"
-            >
-              Close
-            </button>
-            <AuthSection onClose={() => setShowAuth(false)} />
-          </div>
-        </div>
-      )}
-
-      {/* Enhanced Hero Section */}
+    <>
+      {/* Hero Section */}
       <div className="relative min-h-[90vh] flex items-center">
         {/* Video Background */}
         <div className="absolute inset-0 overflow-hidden">
@@ -141,12 +101,107 @@ function App() {
 
       {/* Pricing Section */}
       <PricingSection />
+    </>
+  );
+}
+
+function App() {
+  const [showAuth, setShowAuth] = React.useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const scrollToSection = (sectionId: string) => {
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        element?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
+      const element = document.getElementById(sectionId);
+      element?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
+      {/* Navigation */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <div className="flex items-center gap-8">
+              <Link 
+                to="/" 
+                className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600"
+              >
+                InterviewAI
+              </Link>
+              <div className="hidden md:flex items-center gap-6">
+                <Link 
+                  to="/about" 
+                  className="text-gray-600 hover:text-indigo-600 transition-colors"
+                >
+                  About Us
+                </Link>
+                <button 
+                  onClick={() => scrollToSection('features')}
+                  className="text-gray-600 hover:text-indigo-600 transition-colors"
+                >
+                  Features
+                </button>
+                <button 
+                  onClick={() => scrollToSection('pricing')}
+                  className="text-gray-600 hover:text-indigo-600 transition-colors"
+                >
+                  Pricing
+                </button>
+              </div>
+            </div>
+            <div className="flex gap-4">
+              <button
+                onClick={() => setShowAuth(true)}
+                className="px-4 py-2 text-indigo-600 hover:bg-indigo-50 rounded-lg transition"
+              >
+                Sign In
+              </button>
+              <button
+                onClick={() => setShowAuth(true)}
+                className="px-4 py-2 text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg transition"
+              >
+                Sign Up
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* Auth Modal */}
+      {showAuth && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="relative w-full max-w-md">
+            <button
+              onClick={() => setShowAuth(false)}
+              className="absolute -top-12 right-0 text-white hover:text-gray-200"
+            >
+              Close
+            </button>
+            <AuthSection onClose={() => setShowAuth(false)} />
+          </div>
+        </div>
+      )}
+
+      {/* Routes */}
+      <div className="pt-16">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutUs />} />
+        </Routes>
+      </div>
 
       {/* Footer */}
       <Footer />
     </div>
   );
 }
-
 
 export default App;
