@@ -5,6 +5,7 @@ import { FAQSection } from './components/FAQSection';
 import { PricingSection } from './components/PricingSection';
 import { Footer } from './components/Footer';
 import { AuthSection } from './components/AuthSection';
+import { InteractiveTourSection } from './components/InteractiveTourSection';
 
 function App() {
   const [showAuth, setShowAuth] = React.useState(false);
@@ -131,6 +132,9 @@ function App() {
 
       {/* Features Section */}
       <FeaturesSection />
+
+      {/* Interactive Tour Section */}
+      <InteractiveTourSection />
 
       {/* FAQ Section */}
       <FAQSection />
